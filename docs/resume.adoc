@@ -1,0 +1,31 @@
+= 職務経歴書
+:reproducible:
+:listing-caption: Listing
+:source-highlighter: rouge
+:attribute-missing: warn
+:failure-level: WARN
+
+
+== 経歴
+
+工学系大学院で機械学習を専攻。
+
+
+
+
+aaa
+
+[cols="3,2,5", options="header"]
+|===
+| Column 1 | Column 2 | Column 3
+
+| Row 1, Column 1
+| Row 1, Column 2
+| Row 1, Column 3
+
+| Row 2, Column 1
+| Row 2, Column 2
+| Row 2, Column 3 +
+aaa +
+vvva
+|===

@@ -1,0 +1,58 @@
+name: build asciidoctor-pdf
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Asciidoctor PDF
+        run: |
+          docker run --rm -v $(pwd)/docs:/documents asciidoctor/docker-asciidoctor asciidoctor-pdf -a scripts=cjk -a pdf-theme=default-with-fallback-font -a attribute-missing=warn --failure-level=WARN -D output *.adoc
+
+      - name: Run Asciidoctor HTML
+        run: |
+          docker run --rm -v $(pwd)/docs:/documents asciidoctor/docker-asciidoctor asciidoctor -a scripts=cjk -a pdf-theme=default-with-fallback-font -a attribute-missing=warn --failure-level=WARN -D output *.adoc
+
+      - name: Run Pandoc docx
+        run: |
+          docker run --rm -v $(pwd)/docs:/data pandoc/latex /data/output/resume.html -o /data/output/resume.docx
+          
+      - name: Setup Git for push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit generated files
+        run: |
+          git checkout --orphan build
+          git reset
+          git add $(pwd)/docs/output/*.pdf
+          git add $(pwd)/docs/output/*.docx
+          git commit -m "update latest documents"
+
+      - name: Push to branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin build --force

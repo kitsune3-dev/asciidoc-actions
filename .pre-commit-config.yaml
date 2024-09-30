@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: adoc
+        name: adoc
+        entry: pre-commit.sh
+        language: script
+        files: '\.adoc$'
