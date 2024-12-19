@@ -39,13 +39,11 @@ jobs:
           docker run --rm -v $(pwd)/docs:/data pandoc/latex /data/output/resume.html -o /data/output/resume.docx
 
       - name: Setup Git for push
-        if: github.event_name == 'push'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Commit generated files
-        if: github.event_name == 'push'
         run: |
           git checkout --orphan build
           git reset
