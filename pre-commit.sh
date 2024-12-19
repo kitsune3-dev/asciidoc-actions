@@ -12,7 +12,7 @@ else
 fi
 
 if [ $? -ne 0 ]; then
-    rm *.pdf
-    rm *.docx
+    rm output/*.pdf
+    rm output/*.docx
     exit 1
 fi
