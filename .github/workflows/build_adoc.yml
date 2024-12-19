@@ -51,6 +51,7 @@ jobs:
           git reset
           git add $(pwd)/docs/output/*.pdf
           git add $(pwd)/docs/output/*.docx
+          git add $(pwd)/docs/output/*.html
           git commit -m "update latest documents"
 
       - name: Push to branch
