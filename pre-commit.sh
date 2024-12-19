@@ -1,10 +1,9 @@
 #!/bin/sh
 
-if type "asciidoctor-pdf" > /dev/null 2>&1; then
-    asciidoctor-pdf -a scripts=cjk -a pdf-theme=default-with-fallback-font -a attribute-missing=warn --failure-level=WARN -D output *.adoc
-    $CMD
-elif type "docker" > /dev/null 2>&1; then
+if type "docker" > /dev/null 2>&1; then
     docker run --rm -v ./docs:/documents/ -v ./output:/documents/output asciidoctor/docker-asciidoctor $CMD
+    docker run --rm -v ./docs:/documents/ -v ./output:/documents/output asciidoctor/docker-asciidoctor asciidoctor -a scripts=cjk -a pdf-theme=default-with-fallback-font -a attribute-missing=warn --failure-level=WARN -D output *.adoc
+    docker run --rm -v ./docs:/documents/ -v ./output:/documents/output pandoc/latex /documents/output/resume.html -o /documents/output/resume.docx
 else
     echo "asciidoctor-pdf not found"
     rm *.pdf
