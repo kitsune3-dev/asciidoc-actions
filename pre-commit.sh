@@ -6,13 +6,15 @@ if type "docker" > /dev/null 2>&1; then
     docker run --rm -v ./docs:/documents/ -v ./output:/documents/output pandoc/latex /documents/output/resume.html -o /documents/output/resume.docx
 else
     echo "asciidoctor-pdf not found"
-    rm *.pdf
-    rm *.docx
+    rm ourtput/*.pdf
+    rm output/*.docx
+    rm output/*.html
     exit 1
 fi
 
 if [ $? -ne 0 ]; then
     rm output/*.pdf
     rm output/*.docx
+    rm output/*.html
     exit 1
 fi
