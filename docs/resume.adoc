@@ -1,5 +1,5 @@
 = 職務経歴書
-:reproducible:
+:reproducible:/
 :listing-caption: Listing
 :source-highlighter: rouge
 :attribute-missing: warn
@@ -8,12 +8,7 @@
 
 == 経歴
 
-工学系大学院で機械学習を専攻。
-
-
-
-
-aaa
+これは職務経歴書のサンプルです。
 
 [cols="3,2,5", options="header"]
 |===
